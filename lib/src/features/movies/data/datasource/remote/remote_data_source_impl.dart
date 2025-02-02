@@ -5,6 +5,7 @@ import 'package:movies/src/core/error/api_exception.dart';
 import 'package:movies/src/core/http/remote_http.dart';
 import 'package:movies/src/features/movies/data/datasource/remote/remote_data_source.dart';
 import 'package:movies/src/features/movies/data/models/movie/movie_response.dart';
+import 'package:movies/src/features/movies/data/models/movie_detail/movie_detail.dart';
 
 import 'constants.dart';
 
@@ -35,7 +36,33 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     } on ApiException {
       rethrow;
     } catch (e) {
-      throw ApiException(message: e.toString(), statusCode: 505);
+      throw ApiException(message: e.toString(), statusCode: 500);
+    }
+  }
+
+  @override
+  Future<MovieDetail> getMovieById(int id) async {
+    try {
+      final url = '$baseUrl${apiEndpoints["movies"]["getMovie"]}/$id';
+      final response = await _client.get(
+        Uri.parse(url),
+        headers: commonHeaders,
+      );
+
+      if (response.statusCode == 200) {
+        final decodedResponse = jsonDecode(response.body);
+        final movieDetail = MovieDetail.fromJson(decodedResponse);
+        return movieDetail;
+      } else {
+        throw ApiException(
+          message: "Error fetching movie detail",
+          statusCode: response.statusCode,
+        );
+      }
+    } on ApiException {
+      rethrow;
+    } catch (e) {
+      throw ApiException(message: e.toString(), statusCode: 500);
     }
   }
 }
