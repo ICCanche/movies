@@ -3,7 +3,7 @@ import 'package:movies/src/features/movies/data/models/movie/movie.dart';
 
 class MovieTile extends StatelessWidget {
   final Movie movie;
-  final VoidCallback onTap;
+  final void Function(int movieId) onTap;
 
   const MovieTile({
     Key? key,
@@ -25,7 +25,7 @@ class MovieTile extends StatelessWidget {
         Icons.chevron_right,
         color: Colors.grey.shade400,
       ),
-      onTap: onTap,
+      onTap: () => onTap(movie.id),
     );
   }
 }

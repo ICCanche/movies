@@ -9,11 +9,13 @@ class MoviesScreen extends StatefulWidget {
     required this.movies,
     required this.isLoading,
     required this.onLoadNextPage,
+    required this.onTap,
   });
 
   final List<Movie> movies;
   final bool isLoading;
   final VoidCallback onLoadNextPage;
+  final void Function(int movieId) onTap;
 
   @override
   State<MoviesScreen> createState() => _MoviesScreenState();
@@ -62,7 +64,7 @@ class _MoviesScreenState extends State<MoviesScreen> {
                   final movie = widget.movies[index];
                   return MovieTile(
                     movie: movie,
-                    onTap: () => {},
+                    onTap: widget.onTap,
                   );
                 },
               ),

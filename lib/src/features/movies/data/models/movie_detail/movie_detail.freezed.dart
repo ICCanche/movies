@@ -21,10 +21,12 @@ MovieDetail _$MovieDetailFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$MovieDetail {
   String get title => throw _privateConstructorUsedError;
-  String get posterPath => throw _privateConstructorUsedError;
+  @JsonKey(name: 'poster_path')
+  String? get posterPath => throw _privateConstructorUsedError;
   List<Genre> get genres => throw _privateConstructorUsedError;
-  String get overview => throw _privateConstructorUsedError;
-  String get releaseDate => throw _privateConstructorUsedError;
+  String? get overview => throw _privateConstructorUsedError;
+  @JsonKey(name: 'release_date')
+  String? get releaseDate => throw _privateConstructorUsedError;
 
   /// Serializes this MovieDetail to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -44,10 +46,10 @@ abstract class $MovieDetailCopyWith<$Res> {
   @useResult
   $Res call(
       {String title,
-      String posterPath,
+      @JsonKey(name: 'poster_path') String? posterPath,
       List<Genre> genres,
-      String overview,
-      String releaseDate});
+      String? overview,
+      @JsonKey(name: 'release_date') String? releaseDate});
 }
 
 /// @nodoc
@@ -66,32 +68,32 @@ class _$MovieDetailCopyWithImpl<$Res, $Val extends MovieDetail>
   @override
   $Res call({
     Object? title = null,
-    Object? posterPath = null,
+    Object? posterPath = freezed,
     Object? genres = null,
-    Object? overview = null,
-    Object? releaseDate = null,
+    Object? overview = freezed,
+    Object? releaseDate = freezed,
   }) {
     return _then(_value.copyWith(
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      posterPath: null == posterPath
+      posterPath: freezed == posterPath
           ? _value.posterPath
           : posterPath // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       genres: null == genres
           ? _value.genres
           : genres // ignore: cast_nullable_to_non_nullable
               as List<Genre>,
-      overview: null == overview
+      overview: freezed == overview
           ? _value.overview
           : overview // ignore: cast_nullable_to_non_nullable
-              as String,
-      releaseDate: null == releaseDate
+              as String?,
+      releaseDate: freezed == releaseDate
           ? _value.releaseDate
           : releaseDate // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -106,10 +108,10 @@ abstract class _$$MovieDetailImplCopyWith<$Res>
   @useResult
   $Res call(
       {String title,
-      String posterPath,
+      @JsonKey(name: 'poster_path') String? posterPath,
       List<Genre> genres,
-      String overview,
-      String releaseDate});
+      String? overview,
+      @JsonKey(name: 'release_date') String? releaseDate});
 }
 
 /// @nodoc
@@ -126,32 +128,32 @@ class __$$MovieDetailImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? title = null,
-    Object? posterPath = null,
+    Object? posterPath = freezed,
     Object? genres = null,
-    Object? overview = null,
-    Object? releaseDate = null,
+    Object? overview = freezed,
+    Object? releaseDate = freezed,
   }) {
     return _then(_$MovieDetailImpl(
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      posterPath: null == posterPath
+      posterPath: freezed == posterPath
           ? _value.posterPath
           : posterPath // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       genres: null == genres
           ? _value._genres
           : genres // ignore: cast_nullable_to_non_nullable
               as List<Genre>,
-      overview: null == overview
+      overview: freezed == overview
           ? _value.overview
           : overview // ignore: cast_nullable_to_non_nullable
-              as String,
-      releaseDate: null == releaseDate
+              as String?,
+      releaseDate: freezed == releaseDate
           ? _value.releaseDate
           : releaseDate // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -161,10 +163,10 @@ class __$$MovieDetailImplCopyWithImpl<$Res>
 class _$MovieDetailImpl implements _MovieDetail {
   const _$MovieDetailImpl(
       {required this.title,
-      required this.posterPath,
+      @JsonKey(name: 'poster_path') this.posterPath,
       required final List<Genre> genres,
-      required this.overview,
-      required this.releaseDate})
+      this.overview,
+      @JsonKey(name: 'release_date') this.releaseDate})
       : _genres = genres;
 
   factory _$MovieDetailImpl.fromJson(Map<String, dynamic> json) =>
@@ -173,7 +175,8 @@ class _$MovieDetailImpl implements _MovieDetail {
   @override
   final String title;
   @override
-  final String posterPath;
+  @JsonKey(name: 'poster_path')
+  final String? posterPath;
   final List<Genre> _genres;
   @override
   List<Genre> get genres {
@@ -183,9 +186,10 @@ class _$MovieDetailImpl implements _MovieDetail {
   }
 
   @override
-  final String overview;
+  final String? overview;
   @override
-  final String releaseDate;
+  @JsonKey(name: 'release_date')
+  final String? releaseDate;
 
   @override
   String toString() {
@@ -230,11 +234,12 @@ class _$MovieDetailImpl implements _MovieDetail {
 
 abstract class _MovieDetail implements MovieDetail {
   const factory _MovieDetail(
-      {required final String title,
-      required final String posterPath,
-      required final List<Genre> genres,
-      required final String overview,
-      required final String releaseDate}) = _$MovieDetailImpl;
+          {required final String title,
+          @JsonKey(name: 'poster_path') final String? posterPath,
+          required final List<Genre> genres,
+          final String? overview,
+          @JsonKey(name: 'release_date') final String? releaseDate}) =
+      _$MovieDetailImpl;
 
   factory _MovieDetail.fromJson(Map<String, dynamic> json) =
       _$MovieDetailImpl.fromJson;
@@ -242,13 +247,15 @@ abstract class _MovieDetail implements MovieDetail {
   @override
   String get title;
   @override
-  String get posterPath;
+  @JsonKey(name: 'poster_path')
+  String? get posterPath;
   @override
   List<Genre> get genres;
   @override
-  String get overview;
+  String? get overview;
   @override
-  String get releaseDate;
+  @JsonKey(name: 'release_date')
+  String? get releaseDate;
 
   /// Create a copy of MovieDetail
   /// with the given fields replaced by the non-null parameter values.

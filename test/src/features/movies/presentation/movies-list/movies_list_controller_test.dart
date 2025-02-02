@@ -11,7 +11,8 @@ import 'package:movies/src/features/movies/presentation/movies-list/movies_scree
 
 import '../../data/datasource/__test/movies_test_object.dart';
 
-class MockMoviesListCubit extends MockCubit<MoviesListState> implements MoviesListCubit {}
+class MockMoviesListCubit extends MockCubit<MoviesListState>
+    implements MoviesListCubit {}
 
 class TestHttpOverrides extends HttpOverrides {
   @override
@@ -24,6 +25,7 @@ class TestHttpOverrides extends HttpOverrides {
 void main() {
   late MockMoviesListCubit mockMoviesListCubit;
   late MoviesController moviesController;
+  final movieId = 1;
 
   setUpAll(() {
     HttpOverrides.global = TestHttpOverrides();
@@ -32,7 +34,9 @@ void main() {
 
   setUp(() {
     mockMoviesListCubit = MockMoviesListCubit();
-    moviesController = const MoviesController();
+    moviesController = MoviesController(
+      onMovieClick: (int movieId) {},
+    );
   });
 
   tearDown(() {
@@ -40,70 +44,74 @@ void main() {
   });
 
   group('MoviesController Widget Tests', () {
-    testWidgets('MoviesController renders MoviesScreen when MoviesListLoaded state',
-            (WidgetTester tester) async {
-          when(() => mockMoviesListCubit.state)
-              .thenReturn(MoviesListLoaded(movieResponseTestObject.results));
+    testWidgets(
+        'MoviesController renders MoviesScreen when MoviesListLoaded state',
+        (WidgetTester tester) async {
+      when(() => mockMoviesListCubit.state)
+          .thenReturn(MoviesListLoaded(movieResponseTestObject.results));
 
-          await tester.pumpWidget(
-            MaterialApp(
-              home: BlocProvider<MoviesListCubit>.value(
-                value: mockMoviesListCubit,
-                child: moviesController,
-              ),
-            ),
-          );
+      await tester.pumpWidget(
+        MaterialApp(
+          home: BlocProvider<MoviesListCubit>.value(
+            value: mockMoviesListCubit,
+            child: moviesController,
+          ),
+        ),
+      );
 
-          await tester.pumpAndSettle();
+      await tester.pumpAndSettle();
 
-          expect(find.byType(MoviesScreen), findsOneWidget);
-          expect(find.byType(CircularProgressIndicator), findsNothing);
-          expect(find.byType(ErrorScreen), findsNothing);
-        });
+      expect(find.byType(MoviesScreen), findsOneWidget);
+      expect(find.byType(CircularProgressIndicator), findsNothing);
+      expect(find.byType(ErrorScreen), findsNothing);
+    });
 
-    testWidgets('MoviesController renders ErrorScreen when MoviesListError state',
-            (WidgetTester tester) async {
-          const errorMessage = 'Failed to load movies';
-          when(() => mockMoviesListCubit.state)
-              .thenReturn(MoviesListError(errorMessage));
+    testWidgets(
+        'MoviesController renders ErrorScreen when MoviesListError state',
+        (WidgetTester tester) async {
+      const errorMessage = 'Failed to load movies';
+      when(() => mockMoviesListCubit.state)
+          .thenReturn(MoviesListError(errorMessage));
 
-          await tester.pumpWidget(
-            MaterialApp(
-              home: BlocProvider<MoviesListCubit>.value(
-                value: mockMoviesListCubit,
-                child: moviesController,
-              ),
-            ),
-          );
+      await tester.pumpWidget(
+        MaterialApp(
+          home: BlocProvider<MoviesListCubit>.value(
+            value: mockMoviesListCubit,
+            child: moviesController,
+          ),
+        ),
+      );
 
-          await tester.pumpAndSettle();
+      await tester.pumpAndSettle();
 
-          expect(find.byType(ErrorScreen), findsOneWidget);
-          expect(find.text('Error: $errorMessage'), findsOneWidget);
-        });
+      expect(find.byType(ErrorScreen), findsOneWidget);
+      expect(find.text('Error: $errorMessage'), findsOneWidget);
+    });
 
-    testWidgets('MoviesController triggers loadInitialMovies when retry is tapped',
-            (WidgetTester tester) async {
-          const errorMessage = 'Failed to load movies';
-          when(() => mockMoviesListCubit.state)
-              .thenReturn(MoviesListError(errorMessage));
-          when(() => mockMoviesListCubit.loadInitialMovies()).thenAnswer((_) async {});
+    testWidgets(
+        'MoviesController triggers loadInitialMovies when retry is tapped',
+        (WidgetTester tester) async {
+      const errorMessage = 'Failed to load movies';
+      when(() => mockMoviesListCubit.state)
+          .thenReturn(MoviesListError(errorMessage));
+      when(() => mockMoviesListCubit.loadInitialMovies())
+          .thenAnswer((_) async {});
 
-          await tester.pumpWidget(
-            MaterialApp(
-              home: BlocProvider<MoviesListCubit>.value(
-                value: mockMoviesListCubit,
-                child: moviesController,
-              ),
-            ),
-          );
+      await tester.pumpWidget(
+        MaterialApp(
+          home: BlocProvider<MoviesListCubit>.value(
+            value: mockMoviesListCubit,
+            child: moviesController,
+          ),
+        ),
+      );
 
-          await tester.pumpAndSettle();
+      await tester.pumpAndSettle();
 
-          await tester.tap(find.byType(ElevatedButton));
-          await tester.pumpAndSettle();
+      await tester.tap(find.byType(ElevatedButton));
+      await tester.pumpAndSettle();
 
-          verify(() => mockMoviesListCubit.loadInitialMovies()).called(1);
-        });
+      verify(() => mockMoviesListCubit.loadInitialMovies()).called(1);
+    });
   });
 }
