@@ -24,7 +24,6 @@ class MoviesController extends StatelessWidget {
           );
         }
 
-        // Always provide a Scaffold
         return Scaffold(
           appBar: AppBar(
             title: const Text("Movies App"),
