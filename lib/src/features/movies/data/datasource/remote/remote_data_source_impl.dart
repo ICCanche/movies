@@ -27,6 +27,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
         final movieResponse = MovieResponse.fromJson(decodedResponse);
         return movieResponse;
       } else {
+        print("puto" + response.body);
         throw ApiException(
           message: "Error fetching popular movies",
           statusCode: response.statusCode,
@@ -35,6 +36,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     } on ApiException {
       rethrow;
     } catch (e) {
+      print("puto" + e.toString());
       throw ApiException(message: e.toString(), statusCode: 505);
     }
   }
