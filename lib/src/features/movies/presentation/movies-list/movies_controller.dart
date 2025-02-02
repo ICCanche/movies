@@ -6,7 +6,9 @@ import 'package:movies/src/features/movies/presentation/movies-list/cubit/movies
 import 'package:movies/src/features/movies/presentation/movies-list/movies_screen.dart';
 
 class MoviesController extends StatelessWidget {
-  const MoviesController({super.key});
+  const MoviesController({super.key, required this.onMovieClick});
+
+  final void Function(int movieId) onMovieClick;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,7 @@ class MoviesController extends StatelessWidget {
             onLoadNextPage: () {
               context.read<MoviesListCubit>().loadNextPage();
             },
+            onTap: (movieId) => {onMovieClick(movieId)},
           );
         }
 
@@ -32,11 +35,11 @@ class MoviesController extends StatelessWidget {
           ),
           body: state is MoviesListError
               ? ErrorScreen(
-            errorMessage: state.errorMessage,
-            onRetry: () {
-              context.read<MoviesListCubit>().loadInitialMovies();
-            },
-          )
+                  errorMessage: state.errorMessage,
+                  onRetry: () {
+                    context.read<MoviesListCubit>().loadInitialMovies();
+                  },
+                )
               : const Center(child: CircularProgressIndicator()),
         );
       },

@@ -54,6 +54,7 @@ void main() {
           movies: testMovies,
           isLoading: false,
           onLoadNextPage: () {},
+          onTap: (movieId) {},
         ),
       ),
     );
@@ -71,6 +72,7 @@ void main() {
               movies: [],
               isLoading: true,
               onLoadNextPage: () {},
+              onTap: (movieId) {},
             ),
           ),
         );
@@ -85,6 +87,7 @@ void main() {
           movies: testMovies,
           isLoading: false,
           onLoadNextPage: () {},
+          onTap: (movieId) {},
         ),
       ),
     );
