@@ -29,6 +29,7 @@ class MoviesListCubit extends Cubit<MoviesListState> {
   }
 
   Future<void> _loadMovies() async {
+    if (_isLoading) return;
     _isLoading = true;
     emit(MoviesListLoading());
 
