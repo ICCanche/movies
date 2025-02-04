@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
@@ -11,7 +12,10 @@ import '__test/movies_test_object.dart';
 
 class MockHttpClient extends Mock implements http.Client {}
 
-void main() {
+void main() async {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
+
   late RemoteDataSourceImpl dataSource;
   late http.Client mockHttpClient;
 
