@@ -20,7 +20,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       final url = '$baseUrl${apiEndpoints["movies"]["getPopular"]}&page=$page';
       final response = await _client.get(
         Uri.parse(url),
-        headers: commonHeaders,
+        headers: getCommonHeaders(),
       );
 
       if (response.statusCode == 200) {
@@ -46,7 +46,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       final url = '$baseUrl${apiEndpoints["movies"]["getMovie"]}/$id';
       final response = await _client.get(
         Uri.parse(url),
-        headers: commonHeaders,
+        headers: getCommonHeaders(),
       );
 
       if (response.statusCode == 200) {
